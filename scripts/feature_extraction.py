@@ -6,8 +6,8 @@ import pandas as pd
 
 ###Coonfiguration
 
-dataset_path="Ravdess"
-csv_output="mfcc_features.csv"
+dataset_path="data\Ravdess"
+csv_output="data\mfcc_features.csv"
 N_MFCC=40 # No of MFCC coefficients to extract
 sample_rate=22050 # Hertz
 
