@@ -1,0 +1,7 @@
+[33ma70e300[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Removed large files (datasets and models)
+[33me04127a[m Added Requirements file
+[33mc6a2b5f[m Restructured project into proper folder
+[33mdb45401[m Restructured project into folders (data, src, models, etc.)
+[33m635f0f3[m Add custom dataset - recordings from 16 speakers across 8 emotions
+[33m6a47725[m Preprocessing and MFCC feature extraction
+[33m6277215[m Initial dataset integration: added RAVDESS dataset, implemented audio_analysis.py for waveform plotting and speech/song detection, and dataset analysis for counting .wav files
