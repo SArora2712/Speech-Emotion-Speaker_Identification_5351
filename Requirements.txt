@@ -1,5 +1,0 @@
-pandas
-librosa
-matplolib
-seaborn
-SpeechRecognition
