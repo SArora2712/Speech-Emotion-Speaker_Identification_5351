@@ -17,8 +17,8 @@ from sklearn.metrics import (
     confusion_matrix,f1_score
     )
 
-csv_path="mfcc_features.csv"
-models_folder="saved_models"
+csv_path="data/mfcc_features.csv"
+models_folder="models"
 Random_state=42
 Test_size=0.2
 N_mfcc=40
@@ -166,7 +166,7 @@ def confusion_matrix_vis(y_test,y_pred,le,model_name):
     cm=confusion_matrix(y_test,y_pred)
     cm_pct=cm.astype("float")/cm.sum(axis=1)[:,np.newaxis]*100
     labels=le.classes_
-    fname=f"confusion_matrix_{model_name.lower().replace(' ','_')}.png"
+    fname=f"outputs/confusion_matrix_{model_name.lower().replace(' ','_')}.png"
 
     plt.figure(figsize=(10,8))
     sns.heatmap(
@@ -223,7 +223,7 @@ def plot_accuracy_comp(results):
     ax.grid(axis="y",alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig("model_comparison.png")
+    plt.savefig("outputs/model_comparison.png")
     plt.show()
     print("Saved \"model_comparison.png\"")
 

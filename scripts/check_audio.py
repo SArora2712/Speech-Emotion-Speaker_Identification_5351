@@ -4,7 +4,7 @@ import librosa
 import soundfile as sf
 
 # ─────────────────────────────────────────
-DATASET_PATH  = "Custom_Dataset"
+DATASET_PATH  = "data\Custom_Dataset"
 SAMPLE_RATE   = 22050
 MIN_DURATION  = 1.0    # seconds — too short means person did not speak
 MAX_DURATION  = 6.0    # seconds — too long means too much silence

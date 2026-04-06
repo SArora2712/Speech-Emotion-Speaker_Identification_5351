@@ -9,7 +9,7 @@ import os
 SAMPLE_RATE   = 22050
 DURATION      = 4
 CHANNELS      = 1
-OUTPUT_FOLDER = "Custom_Dataset"
+OUTPUT_FOLDER = "data/Custom_Dataset"
 TARGET_TAKES  = 5    # minimum takes needed per emotion per speaker
 
 # ── RAVDESS-aligned emotions only ────────────────────────────

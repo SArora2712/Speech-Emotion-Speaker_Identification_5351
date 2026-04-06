@@ -252,7 +252,7 @@ def plot_model_comparison(results):
     ax.legend(fontsize=11)
     ax.grid(axis="y", alpha=0.3)
     plt.tight_layout()
-    plt.savefig("speaker_model_comparison.png", dpi=150)
+    plt.savefig("outputs\speaker_model_comparison.png", dpi=150)
     plt.show()
     print("  Saved -> speaker_model_comparison.png")
 
@@ -294,7 +294,7 @@ def plot_per_speaker_accuracy(y_test, y_pred, le, model_name):
     plt.xticks(rotation=45, ha="right")
     plt.legend(fontsize=10)
     plt.tight_layout()
-    plt.savefig("per_speaker_accuracy.png", dpi=150)
+    plt.savefig("outputs\per_speaker_accuracy.png", dpi=150)
     plt.show()
     print("  Saved -> per_speaker_accuracy.png")
 
@@ -319,7 +319,7 @@ def plot_mlp_loss(mlp_model):
     plt.legend()
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig("mlp_loss_curve_speaker.png", dpi=150)
+    plt.savefig("outputs\mlp_loss_curve_speaker.png", dpi=150)
     plt.show()
     print("  Saved -> mlp_loss_curve_speaker.png")
  
