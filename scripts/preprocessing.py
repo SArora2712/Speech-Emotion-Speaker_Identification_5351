@@ -5,7 +5,7 @@ import librosa.display
 import matplotlib.pyplot as plt
 
 # In BOTH preprocessing.py and feature_extraction.py, line 9:
-DATASET_PATH = r"D:\laptop\sukhman\Amity\Amity 6th sem\minor proj\Ravdess"
+DATASET_PATH = "data\Ravdess"
 sample_rate=22050
 
 emotion_map={

@@ -3,3 +3,4 @@ librosa
 matplolib
 seaborn
 SpeechRecognition
+xgboost

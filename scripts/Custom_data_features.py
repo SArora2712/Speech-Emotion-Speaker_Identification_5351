@@ -5,8 +5,8 @@ import librosa
 import matplotlib.pyplot as plt
 
 #  CONFIGURA
-dataset_path = "Custom_Dataset"
-csv_output="custom_features.csv"
+dataset_path = "data\Custom_Dataset"
+csv_output="data\custom_features.csv"
 N_mfcc=40
 sample_rate=22050
 
