@@ -6,6 +6,7 @@ import joblib
 import os
  
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
@@ -92,6 +93,8 @@ def train_svm(x_train, y_train):
         kernel="rbf",
         C=10,
         gamma="scale",
+        class_weight="balanced",
+        probability=True,
         random_state=Random_state
     )
     model.fit(x_train, y_train)
@@ -104,6 +107,7 @@ def train_random_forest(x_train, y_train):
         n_estimators=200,
         max_depth=None,
         min_samples_split=2,
+        class_weight="balanced",
         random_state=Random_state,
         n_jobs=-1
     )
@@ -116,6 +120,7 @@ def train_logistic_regression(x_train, y_train):
     model = LogisticRegression(
         max_iter=1000,
         random_state=Random_state,
+        class_weight="balanced",
         solver="lbfgs"
     )
     model.fit(x_train, y_train)
@@ -129,7 +134,7 @@ def train_xgboost(x_train, y_train):
         n_estimators=100,
         max_depth=6,
         learning_rate=0.1,
-        sub_sample=0.8,
+        subsample=0.8,
         colsample_bytree=0.8,
         random_state=Random_state,
         eval_metric="mlogloss",
@@ -186,7 +191,7 @@ def plot_confusion_matrix(y_test, y_pred, le, model_name):
     plt.figure(figsize=(fig_size,fig_size-1))
     sns.heatmap(
             cm_pct, 
-            annot=cm, 
+            annot=True, 
             fmt=".1f", 
             cmap="Purples",
             xticklabels=labels, 
@@ -252,7 +257,7 @@ def plot_model_comparison(results):
     ax.legend(fontsize=11)
     ax.grid(axis="y", alpha=0.3)
     plt.tight_layout()
-    plt.savefig("outputs\speaker_model_comparison.png", dpi=150)
+    plt.savefig("outputs\\speaker_model_comparison.png", dpi=150)
     plt.show()
     print("  Saved -> speaker_model_comparison.png")
 
@@ -294,7 +299,7 @@ def plot_per_speaker_accuracy(y_test, y_pred, le, model_name):
     plt.xticks(rotation=45, ha="right")
     plt.legend(fontsize=10)
     plt.tight_layout()
-    plt.savefig("outputs\per_speaker_accuracy.png", dpi=150)
+    plt.savefig("outputs\\per_speaker_accuracy.png", dpi=150)
     plt.show()
     print("  Saved -> per_speaker_accuracy.png")
 
@@ -319,7 +324,7 @@ def plot_mlp_loss(mlp_model):
     plt.legend()
     plt.grid(alpha=0.3)
     plt.tight_layout()
-    plt.savefig("outputs\mlp_loss_curve_speaker.png", dpi=150)
+    plt.savefig("outputs\\mlp_loss_curve_speaker.png", dpi=150)
     plt.show()
     print("  Saved -> mlp_loss_curve_speaker.png")
  
@@ -357,7 +362,9 @@ def main():
     x, y, df = load_data()
     if x is None:
         return
- 
+    print("\n[DEBUG] Feature Info:")
+    print(f"Shape: {x.shape}")
+    print(f"Min: {x.min():.2f}, Max: {x.max():.2f}, Mean: {x.mean():.2f}")
     # ── Step 2: Preprocess ────────────────────────────────────
     x_train, x_test, y_train, y_test, le, scaler = preprocess_data(x, y)
  
@@ -386,7 +393,12 @@ def main():
     results    = {}
     all_y_pred = {}
  
+    
+
     for model_name, model in models.items():
+        print(f"\nRunning CV for {model_name}...")
+        cv_score = cross_val_score(model, x_train, y_train, cv=5)
+        print(f"CV Score: {cv_score.mean()*100:.2f}%")
         accuracy, f1, y_pred = evaluate_model(
             model, x_test, y_test, le, model_name
         )
