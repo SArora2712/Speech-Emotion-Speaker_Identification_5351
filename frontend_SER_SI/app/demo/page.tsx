@@ -55,8 +55,8 @@ export default function DemoPage() {
       recorder.ondataavailable = (e) => chunks.push(e.data);
       recorder.onstop = async () => {
 
-        const blob = new Blob(chunks, { type: 'audio/webm' });
-        const file = new File([blob], `recording_${Date.now()}.webm`, { type: 'audio/webm' });
+        const blob = new Blob(chunks, { type: 'audio/wav' });
+        const file = new File([blob], `recording_${Date.now()}.wav`, { type: 'audio/wav' });
 
         setIsRecording(false);
         await analyzeFile(file);

@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import shutil
 import os
 import sys
+from pydub import AudioSegment
+import librosa
+import soundfile as sf
+
+# Load audio (auto detects format)
 
 # === IMPORTANT: Add paths so Python can find your files ===
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -23,13 +28,18 @@ app.add_middleware(
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-# Load the model once when server starts
-predictor = FinalEmotiVoice()
+#  Convert ANY audio to proper WAV
+audio, sr = librosa.load(file_path, sr=None)
+wav_path = file_path.rsplit(".", 1)[0] + ".wav"
+sf.write(wav_path, audio, sr)
+
+# Now send WAV to model
+result = predictor.predict(wav_path)
 
 @app.post("/analyze")
 async def analyze_audio(file: UploadFile = File(...)):
-    if not file.filename.lower().endswith(".wav"):
-        raise HTTPException(400, detail="Only .wav files are allowed")
+    if not file.filename.lower().endswith((".wav", ".webm")):
+        raise HTTPException(400, detail="Only .wav or .webm files are allowed")
 
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     
