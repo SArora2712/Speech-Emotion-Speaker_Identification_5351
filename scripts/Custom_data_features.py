@@ -5,8 +5,8 @@ import librosa
 import matplotlib.pyplot as plt
 
 #  CONFIGURA
-dataset_path = "data\Custom_Dataset"
-csv_output="data\custom_features.csv"
+dataset_path = "data/Custom_Dataset"
+csv_output="data/custom_features.csv"
 N_mfcc=40
 sample_rate=22050
 
@@ -17,27 +17,24 @@ valid_emotions=[
 ]
 
 def get_emotion_from_path(root):
-    parts=root.replace("\\","/").split("/")
+    parts = root.replace("\\", "/").split("/")
     return parts[-1].lower()
 
 def get_speaker_from_path(root):
-    parts=root.replace("\\","/").split("/")
-    return parts[-2]
+    parts = root.replace("\\", "/").split("/")
+    return parts[-2] if len(parts) > 1 else "unknown"
 
-def preprocess_audio(file_path):
-    signal,sr=librosa.load(file_path,sr=sample_rate)
+def extract_mfcc(file_path, n_mfcc=40):
+    signal, sr = librosa.load(file_path, sr=sample_rate)
 
-    if np.max(np.abs(signal))>0:
-        signal=signal/np.max(np.abs(signal))
-    
-    
-    signal,_=librosa.effects.trim(signal,top_db=20)
+    if np.max(np.abs(signal)) > 0:
+        signal = signal / np.max(np.abs(signal))
 
-    return signal,sr
+    signal, _ = librosa.effects.trim(signal, top_db=20)
 
-def extract_mfcc_features(signal,sr):
-    mfcc=librosa.feature.mfcc(y=signal,sr=sr,n_mfcc=N_mfcc)
-    return np.mean(mfcc,axis=1 )
+    mfcc = librosa.feature.mfcc(y=signal, sr=sr, n_mfcc=n_mfcc)
+
+    return np.mean(mfcc.T, axis=0)
 
 def build_custom_dataset():
     rows=[]
@@ -65,8 +62,8 @@ def build_custom_dataset():
             file_path=os.path.join(root,file)
 
             try:
-                signal,sr=preprocess_audio(file_path)
-                mfcc=extract_mfcc_features(signal,sr)
+            
+                mfcc=extract_mfcc(file_path)
 
                 row={f"mfcc_{i+1}":mfcc[i] for i in range(N_mfcc)}
                 row["emotion"]=emotion
@@ -188,7 +185,7 @@ def visualize_heatmap(df):
     fig,axes=plt.subplots(rows_n,cols,figsize=(16,4*rows_n))
     axes=axes.flatten()
 
-    mfcc_cols=[f"mfcc_{i+1}" for i in range(N_mfcc)]
+    mfcc_cols = [col for col in df.columns if "mfcc" in col.lower()]
 
     for i,emotion in enumerate(emotions):
         subset=df[df["emotion"]==emotion][mfcc_cols].values

@@ -6,8 +6,8 @@ import pandas as pd
 
 ###Coonfiguration
 
-dataset_path="data\Ravdess"
-csv_output="data\mfcc_features.csv"
+dataset_path="data\\Ravdess"
+csv_output="data\\mfcc_features.csv"
 N_MFCC=40 # No of MFCC coefficients to extract
 sample_rate=22050 # Hertz
 
@@ -28,7 +28,7 @@ def parse_filename(file_name):
     Ravdess file-> [modality]-[channel]-[emotion]-[intensity]-[statement]-[repetition]-[actor]
     """
     parts=file_name.replace(".wav","").split("-")
-    modality_code=parts[0]  # speech=01  and song=02
+    modality_code=parts[1]  # speech=01  and song=02
     emotion_code=parts[2]
     actor_id=parts[6]
 
@@ -68,7 +68,7 @@ def build_dataset():
             modality,emotion,actor_id=parse_filename(file)
 
             parts = file.replace(".wav", "").split("-")
-            if parts[0] != "03":               # ← USE THIS INSTEAD
+            if parts[1] != "01":               # ← USE THIS INSTEAD
                 skipped += 1
                 continue
             file_path=os.path.join(root,file)
@@ -76,7 +76,7 @@ def build_dataset():
             try:
                 mfccs=extract_mfcc(file_path,n_mfcc=N_MFCC)
                 
-                row={f"mfcc-_{i+1}": mfccs[i] for i in range(N_MFCC)}
+                row={f"mfcc_{i+1}": mfccs[i] for i in range(N_MFCC)}
                 row["emotion"]=emotion
                 row["actor_id"]=actor_id
                 row["file"]=file
@@ -156,7 +156,6 @@ def main():
     
 if __name__=="__main__":
     main()
-
 
 
 

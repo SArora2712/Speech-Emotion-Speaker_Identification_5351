@@ -1,6 +1,6 @@
 import os
 
-dataset_path="Ravdess"
+dataset_path="data\Ravdess"
 
 total_files=0
 speech_count=0

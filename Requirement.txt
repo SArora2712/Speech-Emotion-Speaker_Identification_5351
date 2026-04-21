@@ -1,6 +1,11 @@
 pandas
 librosa
-matplolib
+matplotlib
 seaborn
 SpeechRecognition
 xgboost
+numpy
+torch
+transformer
+unicorn flask
+node
