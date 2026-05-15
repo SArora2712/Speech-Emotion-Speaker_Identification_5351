@@ -118,6 +118,16 @@ Speaker ID (SVM-RBF)           Emotion Detection (Wav2Vec 2.0)
 | Logistic Regression | 65.2% | Multinomial, lbfgs solver |
 | MLP | 62.8% | Shallow network |
 
+### Speaker Identification — All Models Compared
+
+| Model | Accuracy | F1-Score |
+|---|---|---|
+| **SVM (RBF Kernel)** | **94.1%** | **94.1%** |
+| Logistic Regression | 92.6% | 92.7% |
+| MLP Classifier | 91.2% | 91.7% |
+| Random Forest | 89.7% | 89.7% |
+| XGBoost | 87.5% | 87.5% |
+
 ### Speaker Identification — Per-Speaker Performance (SVM)
 
 | Accuracy | Speakers |
