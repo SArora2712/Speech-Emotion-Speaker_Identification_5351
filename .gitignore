@@ -20,4 +20,10 @@ desktop.ini
 
 # Large temporary files
 *.tmp
-*.log
+*.logdata/
+*.wav
+*.pt
+*.pth
+node_modules/
+__pycache__/
+.env
