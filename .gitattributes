@@ -1,0 +1,3 @@
+frontend_SER_SI/components/ui/** linguist-vendored
+frontend_SER_SI/next-env.d.ts linguist-generated
+*.ipynb linguist-detectable=false
